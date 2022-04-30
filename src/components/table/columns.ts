@@ -1,4 +1,6 @@
-export const PROPERTY_COLUMNS = [
+import { Column } from "react-table";
+
+export const PROPERTY_COLUMNS: readonly Column[] = [
   {
     Header: "id",
     accessor: "id",

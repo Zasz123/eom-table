@@ -2,8 +2,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
-.tableHeaderWrapper {
-  margin-bottom: 10px;
+.customTable {
+  border-spacing: 20px;
 }

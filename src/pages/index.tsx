@@ -1,43 +1,49 @@
 import { useState } from "react";
 import type { NextPageContext } from "next";
 
-import { useQuery } from "react-query";
 import { fetchProperty } from "@services/api/property";
 
-import TableContainer from "@components/table/TableContainer";
-import { IProperty } from "@interfaces/property";
+import useUrlParams from "@hooks/useUrlParams";
 
+import TableContainer from "@components/table/Table";
 import { PROPERTY_COLUMNS } from "@components/table/columns";
+import useSort from "@hooks/useSort";
 
 function Home(props: any) {
-  // TODO: or parameters
-  const [page, setPage] = useState(1);
-  const [offset, setOffset] = useState(20);
-  const [order, setOrder] = useState("id");
-  const [sort, setSort] = useState<"ASC" | "DESC">("DESC");
+  const { page } = useUrlParams();
+  const [take, setTake] = useState(20);
+  const { sort, selectedSortItem, onSetReverse } = useSort("id");
 
-  const { data, isLoading } = useQuery<IProperty[]>(
-    "fetchProperty",
-    () =>
-      fetchProperty({
-        page,
-        offset,
-        order,
-        sorting: sort,
-      }),
-    {
-      initialData: props.result,
-      onError: (error) => {
-        console.log(error);
-      },
-    }
-  );
+  // const { data, isLoading } = useQuery<IProperty[]>(
+  //   "fetchProperty",
+  //   () =>
+  //     fetchProperty({
+  //       page,
+  //       offset,
+  //       order,
+  //       sorting: sort,
+  //     }),
+  //   {
+  //     initialData: props.result,
+  //     onError: (error) => {
+  //       console.log(error);
+  //     },
+  //   }
+  // );
 
   return (
     <div>
-      {data !== undefined && !isLoading && (
-        <TableContainer data={data} columns={PROPERTY_COLUMNS} />
-      )}
+      {/* {data !== undefined && !isLoading && ( */}
+      <TableContainer
+        data={props.result}
+        columns={PROPERTY_COLUMNS}
+        sort={sort}
+        selectedSortItem={selectedSortItem}
+        onSetReverse={onSetReverse}
+        take={take}
+        onChangeTake={setTake}
+      />
+      {/* )} */}
     </div>
   );
 }
