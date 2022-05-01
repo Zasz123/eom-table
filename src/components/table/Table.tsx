@@ -3,7 +3,6 @@ import { Column, useTable } from "react-table";
 
 import tableStyles from "./Table.module.scss";
 import TableColumnSortItem from "./TableColumnSortItem";
-import TableTakeSelect from "./TableTakeSelect";
 
 interface IProps<T extends object> {
   data: T[];
@@ -11,8 +10,6 @@ interface IProps<T extends object> {
   sort: ISort;
   selectedSortItem: string;
   onSetReverse: (itemName?: string | undefined) => void;
-  take: number;
-  onChangeTake: (value: number) => void;
 }
 
 function TableContainer<T extends object>({
@@ -21,8 +18,6 @@ function TableContainer<T extends object>({
   sort,
   selectedSortItem,
   onSetReverse,
-  take,
-  onChangeTake,
 }: IProps<T>) {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
@@ -32,11 +27,6 @@ function TableContainer<T extends object>({
 
   return (
     <div className={tableStyles.tableWrapper}>
-      <TableTakeSelect
-        take={take}
-        selectableTakes={[20, 30, 40, 50]}
-        onChangeTake={onChangeTake}
-      />
       <table className={tableStyles.customTable} {...getTableProps()}>
         <thead className={tableStyles.tableHeaderWrapper}>
           {headerGroups.map((headerGroup) => (

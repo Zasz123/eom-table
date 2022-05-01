@@ -1,14 +1,14 @@
 import axios from "axios";
 
-const BASE_URL = process.env.API_BASE_URL;
+const BASE_URL = process.env.BASE_URL;
 
-axios.defaults.withCredentials = true;
+axios.defaults.baseURL = BASE_URL;
 
 export async function requestGet<T>(
   url: string,
   urlParameters?: object
 ): Promise<T> {
-  const result = await axios.get(`${BASE_URL}${url}`, {
+  const result = await axios.get(url, {
     params: urlParameters,
   });
 
